@@ -187,7 +187,6 @@ class Home:
     def check_clicks_for_windows(self):
         if self.click[0]==1:
             if (time.time()-self.last_clicked)>=self.min_gap_between_clicks:
-                # print ("fuck")
                 app_index = self.any_window_clicked()
                 if app_index is not None:
                     self.check_on_where_the_window_is_clicked(app_index)

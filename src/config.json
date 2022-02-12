@@ -1,0 +1,86 @@
+{
+    "wallpaper": "src/images/wallpaper-butterfly.jpg",
+    "task_bar": {
+        "height": 40,
+        "background": [60, 60, 60],
+        "icon_size": 35,
+        "windows_icon": "src/icons/windows.png",
+        "gap_between_apps": 10
+    },
+    "apps": [
+        {
+            "name": "File Manager",
+            "icon": "src/icons/file-manager.png"
+        },
+        {
+            "name": "Calculator",
+            "icon": "src/icons/calculator.png"
+        },
+        {
+            "name": "Calendar",
+            "icon": "src/icons/calendar.png"
+        },
+        {
+            "name": "Camera",
+            "icon": "src/icons/camera.png"
+        },
+        {
+            "name": "Clock",
+            "icon": "src/icons/clock.png"
+        },
+        {
+            "name": "Mail",
+            "icon": "src/icons/mail.png"
+        },
+        {
+            "name": "Cortana",
+            "icon": "src/icons/cortana.png"
+        },
+        {
+            "name": "Chrome",
+            "icon": "src/icons/chrome.png"
+        }
+    ],
+    "window": {
+        "height": 20,
+        "color": [60, 60, 120],
+        "close_color": [200, 30, 40],
+        "resize_color": [30, 200, 40],
+        "minimize_color": [30, 40, 200],
+        "background": [255, 255, 255],
+        "title_font": {
+            "color": [255, 255, 255],
+            "size": 13
+        }
+    },
+    "apps-backup": [
+        {
+            "name": "Calculator",
+            "icon": "src/icons/calculator.png"
+        },
+        {
+            "name": "Calendar",
+            "icon": "src/icons/calendar.png"
+        },
+        {
+            "name": "Camera",
+            "icon": "src/icons/camera.png"
+        },
+        {
+            "name": "Clock",
+            "icon": "src/icons/clock.png"
+        },
+        {
+            "name": "Mail",
+            "icon": "src/icons/mail.png"
+        },
+        {
+            "name": "Cortana",
+            "icon": "src/icons/cortana.png"
+        },
+        {
+            "name": "Chrome",
+            "icon": "src/icons/chrome.png"
+        }
+    ]
+}

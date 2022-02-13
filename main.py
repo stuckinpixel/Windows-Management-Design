@@ -71,7 +71,10 @@ class Home:
         self.load_apps()
         self.open_apps = []
         self.last_clicked = time.time()
-        self.min_gap_between_clicks = 0.5
+        self.min_gap_between_clicks = 0.3
+        self.holding_top_app = None
+        self.last_clicked_for_dragging = time.time()
+        self.min_gap_between_clicks_for_dragging = 0.25
     def load_apps(self):
         for app in self.config["apps"]:
             icon = pygame.image.load(app["icon"])
@@ -80,6 +83,10 @@ class Home:
             self.apps.append(new_app)
     def draw_wallpaper(self):
         self.surface.blit(self.wallpaper, (0, 0))
+    def draw_windows_icon(self):
+        remaining_distance = self.config["task_bar"]["height"]-self.config["task_bar"]["icon_size"]
+        top_y = HEIGHT-self.config["task_bar"]["height"]+(remaining_distance//2)
+        self.surface.blit(self.windows_icon, (0, top_y))
     def check_clicks_for_task_bar(self, app_index_from_task_bar):
         if (time.time()-self.last_clicked)>=self.min_gap_between_clicks:
             if self.click[0]==1 or self.click[2]==1:
@@ -94,8 +101,10 @@ class Home:
         self.surface.blit(app.icon, (x, top_y))
         if (x)<=self.mouse[0]<=(x+self.config["task_bar"]["height"]) and (top_y)<=self.mouse[1]<=(top_y+self.config["task_bar"]["height"]):
             self.check_clicks_for_task_bar(self.apps.index(app))
-        if len(app.windows)>0:
-            pygame.draw.rect(self.surface, self.color["alpha"], (x, top_y, self.config["task_bar"]["icon_size"], self.config["task_bar"]["icon_size"]), 1)
+        if len(self.open_apps)>0:
+            # print (self.open_apps[0][0], self.apps.index(app))
+            if self.open_apps[0][0]==self.apps.index(app):
+                pygame.draw.rect(self.surface, self.color["alpha"], (x, top_y, self.config["task_bar"]["icon_size"], self.config["task_bar"]["icon_size"]), 1)
     def draw_window(self, window):
         if not window.minimized:
             x, y, width, height = window.x, window.y, window.width, window.height
@@ -139,6 +148,7 @@ class Home:
         self.draw_wallpaper()
         self.draw_windows()
         self.draw_task_bar()
+        self.draw_windows_icon()
     def any_window_clicked(self):
         for app_index in self.open_apps:
             window = self.apps[app_index[0]].windows[app_index[1]]
@@ -194,8 +204,29 @@ class Home:
                 self.last_clicked = time.time()
     def check_clicks(self):
         self.check_clicks_for_windows()
+    def drag(self):
+        # print (self.holding_top_app)
+        if self.click[0]==1:
+            if (time.time()-self.last_clicked_for_dragging)>=self.min_gap_between_clicks_for_dragging:
+                if self.holding_top_app is None:
+                    if len(self.open_apps)>0:
+                        window = self.apps[self.open_apps[0][0]].windows[self.open_apps[0][1]]
+                        if not window.minimized:
+                            x, y, width, height = window.x, window.y, window.width, self.config["window"]["height"]
+                            if (x)<=self.mouse[0]<=(x+width) and (y)<=self.mouse[1]<=(y+height):
+                                self.holding_top_app = [self.mouse[0]-x, self.mouse[1]-y]
+                else:
+                    self.holding_top_app = None
+                self.last_clicked_for_dragging = time.time()
+        if self.holding_top_app is not None:
+            if len(self.open_apps)>0:
+                self.apps[self.open_apps[0][0]].windows[self.open_apps[0][1]].resize(self.mouse[0]-self.holding_top_app[0], self.mouse[1]-self.holding_top_app[1])
     def events(self):
+        self.drag()
         self.check_clicks()
+        # for app in self.apps:
+        #     print (len(app.windows))
+        # print ()
     def run(self):
         while self.play:
             self.surface.fill(self.color["background"])

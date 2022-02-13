@@ -9,6 +9,10 @@
     },
     "apps": [
         {
+            "name": "Cortana",
+            "icon": "src/icons/cortana.png"
+        },
+        {
             "name": "File Manager",
             "icon": "src/icons/file-manager.png"
         },
@@ -31,10 +35,6 @@
         {
             "name": "Mail",
             "icon": "src/icons/mail.png"
-        },
-        {
-            "name": "Cortana",
-            "icon": "src/icons/cortana.png"
         },
         {
             "name": "Chrome",

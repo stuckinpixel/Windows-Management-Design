@@ -24,8 +24,6 @@ class Window:
         self.height = 300
         self.x = random.randint(0, WIDTH-self.width)
         self.y = random.randint(0, HEIGHT-self.height)
-        # self.x = 100
-        # self.y = 100
         self.last_data = [self.x, self.y, self.width, self.height]
         self.minimized = False
         self.is_fully_maximized = False
@@ -102,7 +100,6 @@ class Home:
         if (x)<=self.mouse[0]<=(x+self.config["task_bar"]["height"]) and (top_y)<=self.mouse[1]<=(top_y+self.config["task_bar"]["height"]):
             self.check_clicks_for_task_bar(self.apps.index(app))
         if len(self.open_apps)>0:
-            # print (self.open_apps[0][0], self.apps.index(app))
             if self.open_apps[0][0]==self.apps.index(app):
                 pygame.draw.rect(self.surface, self.color["alpha"], (x, top_y, self.config["task_bar"]["icon_size"], self.config["task_bar"]["icon_size"]), 1)
     def draw_window(self, window):
@@ -134,9 +131,7 @@ class Home:
             pygame.draw.rect(self.surface, self.color["alpha"], (x, y, width, height), 1)
     def draw_windows(self):
         for app_index in self.open_apps[::-1]:
-            # print (app_index)
             self.draw_window(self.apps[app_index[0]].windows[app_index[1]])
-        # print ()
     def draw_task_bar(self):
         x = self.config["task_bar"]["icon_size"]+self.config["task_bar"]["gap_between_apps"]
         y = HEIGHT-self.config["task_bar"]["height"]
@@ -197,7 +192,6 @@ class Home:
     def check_clicks_for_windows(self):
         if self.click[0]==1:
             if (time.time()-self.last_clicked)>=self.min_gap_between_clicks:
-                # print ("fuck")
                 app_index = self.any_window_clicked()
                 if app_index is not None:
                     self.check_on_where_the_window_is_clicked(app_index)
@@ -205,7 +199,6 @@ class Home:
     def check_clicks(self):
         self.check_clicks_for_windows()
     def drag(self):
-        # print (self.holding_top_app)
         if self.click[0]==1:
             if (time.time()-self.last_clicked_for_dragging)>=self.min_gap_between_clicks_for_dragging:
                 if self.holding_top_app is None:
@@ -224,9 +217,6 @@ class Home:
     def events(self):
         self.drag()
         self.check_clicks()
-        # for app in self.apps:
-        #     print (len(app.windows))
-        # print ()
     def run(self):
         while self.play:
             self.surface.fill(self.color["background"])
@@ -242,7 +232,6 @@ class Home:
             #--------------------------------------------------------------
             self.render()
             self.events()
-            # print (self.open_apps)
             # -------------------------------------------------------------
             pygame.display.update()
             ft.tick(fps)
